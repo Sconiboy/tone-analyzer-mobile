@@ -1,97 +1,126 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Tone Analyzer Mobile App
 
-# Getting Started
+A React Native mobile application for on-demand message tone analysis with AI-powered response suggestions.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+## Features
 
-## Step 1: Start Metro
+- **Share Sheet Integration**: Analyze received messages by sharing them to the app
+- **Quick Access Widget**: Activate before sending to check your message tone
+- **Color-Coded Analysis**: Green (positive), Yellow (neutral/ambiguous), Red (negative/confrontational)
+- **AI Response Suggestions**: Get professional, friendly, casual, and diplomatic response options
+- **Clipboard Integration**: Easy copy-paste workflow
+- **Works Everywhere**: SMS, WhatsApp, Email, and all messaging apps
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+## Architecture
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+This mobile app connects to the Tone Analyzer web backend API for processing:
+- **Backend**: https://github.com/Sconiboy/tone-analyzer-web
+- **API Endpoint**: Your deployed web app URL + `/api/trpc`
 
-```sh
-# Using npm
-npm start
+## Prerequisites
 
-# OR using Yarn
-yarn start
+- Node.js 18+ and npm
+- React Native development environment
+- For iOS: Xcode 14+, CocoaPods
+- For Android: Android Studio, JDK 17+
+
+## Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/Sconiboy/tone-analyzer-mobile.git
+cd tone-analyzer-mobile
+
+# Install dependencies
+npm install
+
+# iOS only: Install pods
+cd ios && pod install && cd ..
 ```
 
-## Step 2: Build and run your app
+## Configuration
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
-
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
+1. Update the API endpoint in `src/config.ts`:
+```typescript
+export const API_URL = 'https://your-deployed-backend-url.com';
 ```
+
+2. Configure app permissions in:
+   - **iOS**: `ios/ToneKeyboard/Info.plist`
+   - **Android**: `android/app/src/main/AndroidManifest.xml`
+
+## Running the App
 
 ### iOS
-
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
-```
-
-Then, and every time you update your native dependencies, run:
-
-```sh
-bundle exec pod install
-```
-
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
+```bash
 npm run ios
-
-# OR using Yarn
-yarn ios
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+### Android
+```bash
+npm run android
+```
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+## Building for Production
 
-## Step 3: Modify your app
+### iOS
+1. Open `ios/ToneKeyboard.xcworkspace` in Xcode
+2. Select your development team
+3. Archive and upload to App Store Connect
 
-Now that you have successfully run the app, let's make changes!
+### Android
+```bash
+cd android
+./gradlew assembleRelease
+```
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+The APK will be in `android/app/build/outputs/apk/release/`
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+## Usage
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+### Analyzing Received Messages
+1. Long-press on a message in any app
+2. Tap "Share" → "Tone Analyzer"
+3. View the analysis and suggested responses
+4. Tap a response to copy it
+5. Paste back into your messaging app
 
-## Congratulations! :tada:
+### Checking Before Sending
+1. Open the Tone Analyzer app
+2. Paste your draft message
+3. Select message type and relationship
+4. View analysis and adjust your message
+5. Copy the suggested response if needed
 
-You've successfully run and modified your React Native App. :partying_face:
+## Project Structure
 
-### Now what?
+```
+ToneKeyboard/
+├── src/
+│   ├── components/     # Reusable UI components
+│   ├── screens/        # App screens
+│   ├── services/       # API integration
+│   ├── config.ts       # App configuration
+│   └── App.tsx         # Main app component
+├── ios/                # iOS native code
+├── android/            # Android native code
+└── package.json
+```
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+## Development Notes
 
-# Troubleshooting
+This is a [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+For detailed React Native development instructions, see the [React Native documentation](https://reactnative.dev/docs/environment-setup).
 
-# Learn More
+## Related Projects
 
-To learn more about React Native, take a look at the following resources:
+- **Web App**: [tone-analyzer-web](https://github.com/Sconiboy/tone-analyzer-web)
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+## License
+
+MIT
+
+## Support
+
+For issues or questions, please open an issue on GitHub.
